@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>odoo12_to_odoo14_account_invoice</name>
+    <name>odoo12_to_odoo14_sale_order_line</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -428,23 +428,23 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/12/28 11:00:19.841</created_date>
+    <created_date>2019/07/29 15:42:02.838</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/28 11:00:19.841</modified_date>
+    <modified_date>2019/07/29 15:42:02.838</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>odoo_12</name>
+    <name>odoo 12</name>
     <server>${ODOO_12_HOST}</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>${ODOO _12_DB_NAME}</database>
     <port>5432</port>
     <username>${ODOO _12_DB_USER_NAME}</username>
-    <password>${ODOO _14_DB_PASS}</password>
+    <password>${ODOO _12_DB_PASS}</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -540,23 +540,23 @@
   </connection>
   <order>
     <hop>
-      <from>RD_O12_account_invoice</from>
-      <to>Sort_ai_id</to>
+      <from>RD_O12_sale_order_line</from>
+      <to>Sort_soi_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort_ai_id</from>
-      <to>wait_ai_load </to>
+      <from>wait_soi_load </from>
+      <to>WD_O14_sale_order_line</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>wait_ai_load </from>
-      <to>WD_O14_account_invoice</to>
+      <from>Sort_soi_id</from>
+      <to>wait_soi_load </to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>RD_O12_account_invoice</name>
+    <name>RD_O12_sale_order_line</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -566,72 +566,59 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>odoo_12</connection>
+    <connection>odoo 12</connection>
     <sql>SELECT
   id
+, order_id
 , "name"
-, origin
-, "type"
-, access_token
-, refund_invoice_id
-, "number"
-, move_name
-, reference
-, "comment"
-, "state"
-, sent
-, date_invoice
-, date_due
-, partner_id
-, payment_term_id
-, "date"
-, account_id
-, move_id
-, amount_untaxed
-, amount_untaxed_signed
-, amount_tax
-, amount_total
-, amount_total_signed
-, amount_total_company_signed
+, "sequence"
+, invoice_status
+, price_unit
+, price_subtotal
+, price_tax
+, price_total
+, price_reduce
+, price_reduce_taxinc
+, price_reduce_taxexcl
+, discount
+, product_id
+, product_uom_qty
+, product_uom
+, qty_delivered
+, qty_to_invoice
+, qty_invoiced
+, salesman_id
 , currency_id
-, journal_id
 , company_id
-, reconciled
-, partner_bank_id
-, residual
-, residual_signed
-, residual_company_signed
-, user_id
-, fiscal_position_id
-, commercial_partner_id
-, cash_rounding_id
+, order_partner_id
+, is_downpayment
+, "state"
+, customer_lead
 , create_uid
 , create_date
 , write_uid
 , write_date
-, team_id
-, partner_shipping_id
-, incoterms_id
-, purchase_id
-, campaign_id
-, source_id
-, medium_id
-, workflow_process_id
-, expiration_date
-, note
-, memo
-, is_vender_offer_invoice
-, vendor_credit_flag
-, vendor_bill_id
-, vendor_display_name
-, incoterm_id
-, message_main_attachment_id
-, source_email
-, vendor_bill_purchase_id
-, website_id
-, extract_state
-, extract_remoteid
-FROM "public".account_invoice
+, product_packaging
+, route_id
+, margin
+, purchase_price
+, website_description
+, is_delivery
+, warning_stock
+, linked_line_id
+, customer_request_id
+, req_no
+, is_expense
+, qty_delivered_manual
+, qty_delivered_method
+, untaxed_amount_invoiced
+, untaxed_amount_to_invoice
+, display_type
+, req_date
+, vendor
+, item_no
+, deliver_to_location
+FROM "public".sale_order_line
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -646,8 +633,31 @@ FROM "public".account_invoice
         <name>id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>order_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>order_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -669,7 +679,7 @@ FROM "public".account_invoice
         <name>name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -687,82 +697,13 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>origin</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>origin</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>type</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>type</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>access_token</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>access_token</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>refund_invoice_id</name>
+        <name>sequence</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>refund_invoice_id</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>sequence</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -781,11 +722,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>number</name>
+        <name>invoice_status</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>number</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>invoice_status</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -802,106 +743,60 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
+        <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>move_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>move_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>reference</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>reference</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>comment</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>comment</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>state</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>state</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Boolean</type>
-        <storagetype>normal</storagetype>
-        <name>sent</name>
+        <name>price_unit</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>sent</comments>
-        <conversion_Mask/>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_unit</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>price_subtotal</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_subtotal</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Number</type>
+        <storagetype>normal</storagetype>
+        <name>price_tax</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_tax</comments>
+        <conversion_Mask>####0.0#########;-####0.0#########</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -917,16 +812,16 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Date</type>
+        <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>date_invoice</name>
+        <name>price_total</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>date_invoice</comments>
-        <conversion_Mask/>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_total</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <grouping_symbol/>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -940,16 +835,85 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Date</type>
+        <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>date_due</name>
+        <name>price_reduce</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>date_due</comments>
-        <conversion_Mask/>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_reduce</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>price_reduce_taxinc</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_reduce_taxinc</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>price_reduce_taxexcl</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>price_reduce_taxexcl</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>discount</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>discount</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -965,103 +929,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>partner_id</name>
+        <name>product_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>partner_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>payment_term_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>payment_term_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Date</type>
-        <storagetype>normal</storagetype>
-        <name>date</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>date</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>account_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>account_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>move_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>move_id</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>product_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1080,11 +952,57 @@ FROM "public".account_invoice
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>amount_untaxed</name>
+        <name>product_uom_qty</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>amount_untaxed</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>product_uom_qty</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>product_uom</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>product_uom</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>qty_delivered</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>qty_delivered</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
@@ -1103,11 +1021,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>amount_untaxed_signed</name>
+        <name>qty_to_invoice</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>amount_untaxed_signed</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>qty_to_invoice</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
@@ -1126,11 +1044,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>amount_tax</name>
+        <name>qty_invoiced</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>amount_tax</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>qty_invoiced</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
@@ -1147,62 +1065,16 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>BigNumber</type>
+        <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>amount_total</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>amount_total</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <name>salesman_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>salesman_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>amount_total_signed</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>amount_total_signed</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>amount_total_company_signed</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>amount_total_company_signed</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
+        <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1221,31 +1093,8 @@ FROM "public".account_invoice
         <name>currency_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>currency_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>journal_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>journal_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1267,8 +1116,31 @@ FROM "public".account_invoice
         <name>company_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>company_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>order_partner_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>order_partner_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1287,11 +1159,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>Boolean</type>
         <storagetype>normal</storagetype>
-        <name>reconciled</name>
+        <name>is_downpayment</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>reconciled</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>is_downpayment</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1308,14 +1180,14 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>partner_bank_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>partner_bank_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>state</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>state</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1331,152 +1203,14 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>BigNumber</type>
+        <type>Number</type>
         <storagetype>normal</storagetype>
-        <name>residual</name>
+        <name>customer_lead</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>residual</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>residual_signed</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>residual_signed</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>residual_company_signed</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>residual_company_signed</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>user_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>user_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>fiscal_position_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>fiscal_position_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>commercial_partner_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>commercial_partner_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>cash_rounding_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>cash_rounding_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <origin>RD_O12_crm_team</origin>
+        <comments>customer_lead</comments>
+        <conversion_Mask>####0.0#########;-####0.0#########</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1497,7 +1231,7 @@ FROM "public".account_invoice
         <name>create_uid</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>create_uid</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1520,7 +1254,7 @@ FROM "public".account_invoice
         <name>create_date</name>
         <length>6</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>create_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1543,7 +1277,7 @@ FROM "public".account_invoice
         <name>write_uid</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>write_uid</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1566,7 +1300,7 @@ FROM "public".account_invoice
         <name>write_date</name>
         <length>6</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
+        <origin>RD_O12_crm_team</origin>
         <comments>write_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1586,11 +1320,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>team_id</name>
+        <name>product_packaging</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>team_id</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>product_packaging</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1609,11 +1343,149 @@ FROM "public".account_invoice
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>partner_shipping_id</name>
+        <name>route_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>partner_shipping_id</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>route_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>margin</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>margin</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>purchase_price</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>purchase_price</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>website_description</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>website_description</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Boolean</type>
+        <storagetype>normal</storagetype>
+        <name>is_delivery</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>is_delivery</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>warning_stock</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>warning_stock</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>linked_line_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>linked_line_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1632,11 +1504,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>incoterms_id</name>
+        <name>customer_request_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>incoterms_id</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>customer_request_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1653,14 +1525,14 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>purchase_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>purchase_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>req_no</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>req_no</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1676,14 +1548,14 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>Boolean</type>
         <storagetype>normal</storagetype>
-        <name>campaign_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>campaign_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>is_expense</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>is_expense</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1699,14 +1571,37 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>source_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>source_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>qty_delivered_manual</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>qty_delivered_manual</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>qty_delivered_method</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>qty_delivered_method</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1722,16 +1617,16 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>medium_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>medium_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>untaxed_amount_invoiced</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>untaxed_amount_invoiced</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <grouping_symbol/>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1745,14 +1640,37 @@ FROM "public".account_invoice
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>workflow_process_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>workflow_process_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>untaxed_amount_to_invoice</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>untaxed_amount_to_invoice</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>display_type</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_crm_team</origin>
+        <comments>display_type</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1770,11 +1688,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>Date</type>
         <storagetype>normal</storagetype>
-        <name>expiration_date</name>
+        <name>req_date</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>expiration_date</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>req_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1793,11 +1711,11 @@ FROM "public".account_invoice
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>note</name>
+        <name>vendor</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>note</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>vendor</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1816,81 +1734,12 @@ FROM "public".account_invoice
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>memo</name>
+        <name>item_no</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>memo</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>item_no</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Boolean</type>
-        <storagetype>normal</storagetype>
-        <name>is_vender_offer_invoice</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>is_vender_offer_invoice</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Boolean</type>
-        <storagetype>normal</storagetype>
-        <name>vendor_credit_flag</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>vendor_credit_flag</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>vendor_bill_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>vendor_bill_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1908,173 +1757,12 @@ FROM "public".account_invoice
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>vendor_display_name</name>
+        <name>deliver_to_location</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>vendor_display_name</comments>
+        <origin>RD_O12_crm_team</origin>
+        <comments>deliver_to_location</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>incoterm_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>incoterm_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>message_main_attachment_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>message_main_attachment_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>source_email</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>source_email</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>vendor_bill_purchase_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>vendor_bill_purchase_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>website_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>website_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>extract_state</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>extract_state</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>extract_remoteid</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_account_invoice</origin>
-        <comments>extract_remoteid</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -2099,13 +1787,13 @@ FROM "public".account_invoice
       </output>
     </remotesteps>
     <GUI>
-      <xloc>177</xloc>
-      <yloc>111</yloc>
+      <xloc>128</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Sort_ai_id</name>
+    <name>Sort_soi_id</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -2141,13 +1829,13 @@ FROM "public".account_invoice
       </output>
     </remotesteps>
     <GUI>
-      <xloc>337</xloc>
-      <yloc>111</yloc>
+      <xloc>288</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>WD_O14_account_invoice</name>
+    <name>WD_O14_sale_order_line</name>
     <type>Update</type>
     <description/>
     <distribute>Y</distribute>
@@ -2164,8 +1852,8 @@ FROM "public".account_invoice
     <error_ignored>Y</error_ignored>
     <ignore_flag_field/>
     <lookup>
-      <schema/>
-      <table>account_invoice</table>
+      <schema>public</schema>
+      <table>crm_team</table>
       <key>
         <name>id</name>
         <field>id</field>
@@ -2173,16 +1861,8 @@ FROM "public".account_invoice
         <name2/>
       </key>
       <value>
-        <name>is_vender_offer_invoice</name>
-        <rename>is_vender_offer_invoice</rename>
-      </value>
-      <value>
-        <name>vendor_credit_flag</name>
-        <rename>vendor_credit_flag</rename>
-      </value>
-      <value>
-        <name>workflow_process_id</name>
-        <rename>workflow_process_id</rename>
+        <name>id</name>
+        <rename>id</rename>
       </value>
     </lookup>
     <attributes/>
@@ -2194,13 +1874,13 @@ FROM "public".account_invoice
       </output>
     </remotesteps>
     <GUI>
-      <xloc>625</xloc>
-      <yloc>111</yloc>
+      <xloc>576</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>wait_ai_load </name>
+    <name>wait_soi_load </name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -2212,7 +1892,7 @@ FROM "public".account_invoice
     </partitioning>
     <steps>
       <step>
-        <name>Sort_ai_id</name>
+        <name>Sort_soi_id</name>
         <CopyNr>0</CopyNr>
       </step>
     </steps>
@@ -2225,8 +1905,8 @@ FROM "public".account_invoice
       </output>
     </remotesteps>
     <GUI>
-      <xloc>465</xloc>
-      <yloc>111</yloc>
+      <xloc>416</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
