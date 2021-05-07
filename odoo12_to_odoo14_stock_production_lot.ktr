@@ -1025,10 +1025,6 @@ order by id asc  limit 5</sql>
         <rename>alert_date</rename>
       </value>
       <value>
-        <name>life_date</name>
-        <rename>life_date</rename>
-      </value>
-      <value>
         <name>removal_date</name>
         <rename>removal_date</rename>
       </value>

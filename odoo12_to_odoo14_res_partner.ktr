@@ -417,7 +417,7 @@
     <using_thread_priorities>Y</using_thread_priorities>
     <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
-    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_delay>100000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
     <dependencies>
     </dependencies>
@@ -2979,7 +2979,7 @@ FROM "public".res_partner
         <storagetype>normal</storagetype>
         <name>file</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>RD_O12_res_partner</origin>
         <comments>file</comments>
         <conversion_Mask/>
@@ -3527,7 +3527,7 @@ FROM "public".res_partner
     </partitioning>
     <connection>odoo_14_e</connection>
     <skip_lookup>N</skip_lookup>
-    <commit>100</commit>
+    <commit>1000000</commit>
     <use_batch>Y</use_batch>
     <error_ignored>Y</error_ignored>
     <ignore_flag_field/>
@@ -3540,6 +3540,18 @@ FROM "public".res_partner
         <condition>=</condition>
         <name2/>
       </key>
+      <value>
+        <name>account_manager_cust</name>
+        <rename>account_manager_cust</rename>
+      </value>
+      <value>
+        <name>acq_manager</name>
+        <rename>acq_manager</rename>
+      </value>
+      <value>
+        <name>active</name>
+        <rename>active</rename>
+      </value>
       <value>
         <name>allow_purchase</name>
         <rename>allow_purchase</rename>
@@ -3557,12 +3569,48 @@ FROM "public".res_partner
         <rename>auto_allocate</rename>
       </value>
       <value>
+        <name>calendar_last_notif_ack</name>
+        <rename>calendar_last_notif_ack</rename>
+      </value>
+      <value>
         <name>carrier_acc_no</name>
         <rename>carrier_acc_no</rename>
       </value>
       <value>
         <name>carrier_info</name>
         <rename>carrier_info</rename>
+      </value>
+      <value>
+        <name>charity</name>
+        <rename>charity</rename>
+      </value>
+      <value>
+        <name>city</name>
+        <rename>city</rename>
+      </value>
+      <value>
+        <name>color</name>
+        <rename>color</rename>
+      </value>
+      <value>
+        <name>comment</name>
+        <rename>comment</rename>
+      </value>
+      <value>
+        <name>commercial_company_name</name>
+        <rename>commercial_company_name</rename>
+      </value>
+      <value>
+        <name>commercial_partner_id</name>
+        <rename>commercial_partner_id</rename>
+      </value>
+      <value>
+        <name>company_id</name>
+        <rename>company_id</rename>
+      </value>
+      <value>
+        <name>company_name</name>
+        <rename>company_name</rename>
       </value>
       <value>
         <name>contract</name>
@@ -3573,8 +3621,44 @@ FROM "public".res_partner
         <rename>cooling_period</rename>
       </value>
       <value>
+        <name>country_id</name>
+        <rename>country_id</rename>
+      </value>
+      <value>
+        <name>create_date</name>
+        <rename>create_date</rename>
+      </value>
+      <value>
+        <name>create_uid</name>
+        <rename>create_uid</rename>
+      </value>
+      <value>
+        <name>credit_limit</name>
+        <rename>credit_limit</rename>
+      </value>
+      <value>
+        <name>date</name>
+        <rename>date</rename>
+      </value>
+      <value>
+        <name>debit_limit</name>
+        <rename>debit_limit</rename>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>display_name</rename>
+      </value>
+      <value>
         <name>doc_process_count</name>
         <rename>doc_process_count</rename>
+      </value>
+      <value>
+        <name>email</name>
+        <rename>email</rename>
+      </value>
+      <value>
+        <name>employee</name>
+        <rename>employee</rename>
       </value>
       <value>
         <name>end_date</name>
@@ -3593,6 +3677,10 @@ FROM "public".res_partner
         <rename>friday</rename>
       </value>
       <value>
+        <name>function</name>
+        <rename>function</rename>
+      </value>
+      <value>
         <name>gl_account</name>
         <rename>gl_account</rename>
       </value>
@@ -3605,36 +3693,132 @@ FROM "public".res_partner
         <rename>historic_months</rename>
       </value>
       <value>
+        <name>id</name>
+        <rename>id</rename>
+      </value>
+      <value>
+        <name>industry_id</name>
+        <rename>industry_id</rename>
+      </value>
+      <value>
+        <name>invoice_warn</name>
+        <rename>invoice_warn</rename>
+      </value>
+      <value>
+        <name>invoice_warn_msg</name>
+        <rename>invoice_warn_msg</rename>
+      </value>
+      <value>
         <name>is_broker</name>
         <rename>is_broker</rename>
+      </value>
+      <value>
+        <name>is_company</name>
+        <rename>is_company</rename>
       </value>
       <value>
         <name>is_parent</name>
         <rename>is_parent</rename>
       </value>
       <value>
+        <name>is_published</name>
+        <rename>is_published</rename>
+      </value>
+      <value>
         <name>is_share</name>
         <rename>is_share</rename>
+      </value>
+      <value>
+        <name>is_wholesaler</name>
+        <rename>is_wholesaler</rename>
+      </value>
+      <value>
+        <name>lang</name>
+        <rename>lang</rename>
+      </value>
+      <value>
+        <name>last_time_entries_checked</name>
+        <rename>last_time_entries_checked</rename>
+      </value>
+      <value>
+        <name>length_of_hold</name>
+        <rename>length_of_hold</rename>
+      </value>
+      <value>
+        <name>max_threshold</name>
+        <rename>max_threshold</rename>
+      </value>
+      <value>
+        <name>message_bounce</name>
+        <rename>message_bounce</rename>
       </value>
       <value>
         <name>min_threshold</name>
         <rename>min_threshold</rename>
       </value>
       <value>
+        <name>mobile</name>
+        <rename>mobile</rename>
+      </value>
+      <value>
         <name>monday</name>
         <rename>monday</rename>
+      </value>
+      <value>
+        <name>name</name>
+        <rename>name</rename>
+      </value>
+      <value>
+        <name>national_account_rep</name>
+        <rename>national_account_rep</rename>
       </value>
       <value>
         <name>notification_email</name>
         <rename>notification_email</rename>
       </value>
       <value>
+        <name>ocn_token</name>
+        <rename>ocn_token</rename>
+      </value>
+      <value>
         <name>on_hold</name>
         <rename>on_hold</rename>
       </value>
       <value>
+        <name>online_partner_bank_account</name>
+        <rename>online_partner_bank_account</rename>
+      </value>
+      <value>
+        <name>online_partner_vendor_name</name>
+        <rename>online_partner_vendor_name</rename>
+      </value>
+      <value>
+        <name>order_quota</name>
+        <rename>order_quota</rename>
+      </value>
+      <value>
+        <name>parent_id</name>
+        <rename>parent_id</rename>
+      </value>
+      <value>
         <name>partial_ordering</name>
         <rename>partial_ordering</rename>
+      </value>
+      <value>
+        <name>partner_share</name>
+        <rename>partner_share</rename>
+      </value>
+      <value>
+        <name>phone</name>
+        <rename>phone</rename>
+      </value>
+      <value>
+        <name>picking_warn</name>
+        <rename>picking_warn</rename>
+      </value>
+      <value>
+        <name>picking_warn_msg</name>
+        <rename>picking_warn_msg</rename>
       </value>
       <value>
         <name>preferred_method</name>
@@ -3649,12 +3833,40 @@ FROM "public".res_partner
         <rename>priority</rename>
       </value>
       <value>
+        <name>purchase_warn</name>
+        <rename>purchase_warn</rename>
+      </value>
+      <value>
+        <name>purchase_warn_msg</name>
+        <rename>purchase_warn_msg</rename>
+      </value>
+      <value>
         <name>quickbook_id</name>
         <rename>quickbook_id</rename>
       </value>
       <value>
+        <name>ref</name>
+        <rename>ref</rename>
+      </value>
+      <value>
+        <name>reinstated_date</name>
+        <rename>reinstated_date</rename>
+      </value>
+      <value>
+        <name>revenue_quota</name>
+        <rename>revenue_quota</rename>
+      </value>
+      <value>
         <name>sale_margine</name>
         <rename>sale_margine</rename>
+      </value>
+      <value>
+        <name>sale_warn</name>
+        <rename>sale_warn</rename>
+      </value>
+      <value>
+        <name>sale_warn_msg</name>
+        <rename>sale_warn_msg</rename>
       </value>
       <value>
         <name>saleforce_ac</name>
@@ -3669,6 +3881,18 @@ FROM "public".res_partner
         <rename>shipping_terms</rename>
       </value>
       <value>
+        <name>signup_expiration</name>
+        <rename>signup_expiration</rename>
+      </value>
+      <value>
+        <name>signup_token</name>
+        <rename>signup_token</rename>
+      </value>
+      <value>
+        <name>signup_type</name>
+        <rename>signup_type</rename>
+      </value>
+      <value>
         <name>sku_postconfig</name>
         <rename>sku_postconfig</rename>
       </value>
@@ -3681,12 +3905,36 @@ FROM "public".res_partner
         <rename>start_date</rename>
       </value>
       <value>
+        <name>state_id</name>
+        <rename>state_id</rename>
+      </value>
+      <value>
+        <name>street</name>
+        <rename>street</rename>
+      </value>
+      <value>
+        <name>street2</name>
+        <rename>street2</rename>
+      </value>
+      <value>
         <name>sunday</name>
         <rename>sunday</rename>
       </value>
       <value>
+        <name>team_id</name>
+        <rename>team_id</rename>
+      </value>
+      <value>
         <name>thursday</name>
         <rename>thursday</rename>
+      </value>
+      <value>
+        <name>title</name>
+        <rename>title</rename>
+      </value>
+      <value>
+        <name>todays_notification</name>
+        <rename>todays_notification</rename>
       </value>
       <value>
         <name>tuesday</name>
@@ -3697,8 +3945,64 @@ FROM "public".res_partner
         <rename>type</rename>
       </value>
       <value>
+        <name>tz</name>
+        <rename>tz</rename>
+      </value>
+      <value>
+        <name>user_id</name>
+        <rename>user_id</rename>
+      </value>
+      <value>
+        <name>vat</name>
+        <rename>vat</rename>
+      </value>
+      <value>
+        <name>website</name>
+        <rename>website</rename>
+      </value>
+      <value>
+        <name>website_description</name>
+        <rename>website_description</rename>
+      </value>
+      <value>
+        <name>website_id</name>
+        <rename>website_id</rename>
+      </value>
+      <value>
+        <name>website_meta_description</name>
+        <rename>website_meta_description</rename>
+      </value>
+      <value>
+        <name>website_meta_keywords</name>
+        <rename>website_meta_keywords</rename>
+      </value>
+      <value>
+        <name>website_meta_og_img</name>
+        <rename>website_meta_og_img</rename>
+      </value>
+      <value>
+        <name>website_meta_title</name>
+        <rename>website_meta_title</rename>
+      </value>
+      <value>
+        <name>website_short_description</name>
+        <rename>website_short_description</rename>
+      </value>
+      <value>
         <name>wednesday</name>
         <rename>wednesday</rename>
+      </value>
+      <value>
+        <name>write_date</name>
+        <rename>write_date</rename>
+      </value>
+      <value>
+        <name>write_uid</name>
+        <rename>write_uid</rename>
+      </value>
+      <value>
+        <name>zip</name>
+        <rename>zip</rename>
       </value>
     </lookup>
     <attributes/>

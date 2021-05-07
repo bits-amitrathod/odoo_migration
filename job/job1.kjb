@@ -321,7 +321,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}/odoo12_to_odoo14_res_partner.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_res_partner.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -360,7 +360,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}/odoo12_to_odoo14_product_template.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_product_template.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -399,7 +399,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}/odoo12_to_odoo14_prioritization_engine_prioritization.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_prioritization_engine_prioritization.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -438,7 +438,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}\odoo12_to_odoo14_crm_team.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_crm_team.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -477,7 +477,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}/odoo12_to_odoo14_prioritization_transient.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_prioritization_transient.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -516,7 +516,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}\odoo12_to_odoo14_prioritization_engine_model.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_prioritization_engine_model.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -555,7 +555,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}\odoo12_to_odoo14_stoc_move.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_stoc_move.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -594,7 +594,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}\odoo12_to_odoo14_res_config_settings.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_res_config_settings.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -633,7 +633,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${KTL_FILE_PATH}\odoo12_to_odoo14_gl_account.ktr</filename>
+      <filename>/opt/data-integration/odoo_migration/odoo12_to_odoo14_gl_account.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -681,7 +681,7 @@
       <to>product.template</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>

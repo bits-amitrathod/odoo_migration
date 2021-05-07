@@ -1773,7 +1773,7 @@ FROM "public".purchase_order
         <storagetype>normal</storagetype>
         <name>document</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>RD_O11_purchase_order</origin>
         <comments>document</comments>
         <conversion_Mask/>

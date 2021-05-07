@@ -1289,6 +1289,10 @@ order by id asc  limit 5
         <name>lot_expired_date</name>
         <rename>lot_expired_date</rename>
       </value>
+      <value>
+        <name>write_date</name>
+        <rename>write_date</rename>
+      </value>
     </lookup>
     <attributes/>
     <cluster_schema/>
