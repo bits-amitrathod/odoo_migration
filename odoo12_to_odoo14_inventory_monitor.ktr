@@ -1141,10 +1141,6 @@ FROM "public".inventory_monitor
         <name2/>
       </key>
       <value>
-        <name>id</name>
-        <rename>id</rename>
-      </value>
-      <value>
         <name>max_inventory_level</name>
         <rename>max_inventory_level</rename>
       </value>
@@ -1199,26 +1195,6 @@ FROM "public".inventory_monitor
       <value>
         <name>actual_quantity</name>
         <rename>actual_quantity</rename>
-      </value>
-      <value>
-        <name>create_uid</name>
-        <rename>create_uid</rename>
-      </value>
-      <value>
-        <name>create_date</name>
-        <rename>create_date</rename>
-      </value>
-      <value>
-        <name>write_uid</name>
-        <rename>write_uid</rename>
-      </value>
-      <value>
-        <name>write_date</name>
-        <rename>write_date</rename>
-      </value>
-      <value>
-        <name>percentage_field</name>
-        <rename>percentage_field</rename>
       </value>
     </lookup>
     <attributes/>

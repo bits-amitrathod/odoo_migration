@@ -952,22 +952,6 @@ FROM "public".resource_webresource
         <name>category</name>
         <rename>category</rename>
       </value>
-      <value>
-        <name>create_uid</name>
-        <rename>create_uid</rename>
-      </value>
-      <value>
-        <name>create_date</name>
-        <rename>create_date</rename>
-      </value>
-      <value>
-        <name>write_uid</name>
-        <rename>write_uid</rename>
-      </value>
-      <value>
-        <name>write_date</name>
-        <rename>write_date</rename>
-      </value>
     </lookup>
     <attributes/>
     <cluster_schema/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>odoo12_to_odoo14_mail_activity</name>
+    <name>odoo12_to_odoo14_cust_pro_catalog</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -540,23 +540,198 @@
   </connection>
   <order>
     <hop>
-      <from>RD_O12_mail_activity</from>
-      <to>Sort_ma_id</to>
+      <from>RD_O12_cust_pro_catalog</from>
+      <to>Sort_cpc_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>wait_ma_load </from>
-      <to>WD_O14_mail_activity</to>
+      <from>wait_cpc_load </from>
+      <to>WD_O14_cust_pro_catalog</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort_ma_id</from>
-      <to>wait_ma_load </to>
+      <from>Sort_cpc_id</from>
+      <to>wait_cpc_load </to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Output steps metrics</from>
+      <to>Excel writer</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>WD_O14_cust_pro_catalog</from>
+      <to>wait</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>wait</from>
+      <to>Output steps metrics</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>RD_O12_mail_activity</name>
+    <name>Excel writer</name>
+    <type>TypeExitExcelWriterStep</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <header>Y</header>
+    <footer>N</footer>
+    <makeSheetActive>N</makeSheetActive>
+    <rowWritingMethod>overwrite</rowWritingMethod>
+    <startingCell>A1</startingCell>
+    <appendOmitHeader>N</appendOmitHeader>
+    <appendOffset>0</appendOffset>
+    <appendEmpty>0</appendEmpty>
+    <rowWritingMethod>overwrite</rowWritingMethod>
+    <forceFormulaRecalculation>N</forceFormulaRecalculation>
+    <leaveExistingStylesUnchanged>N</leaveExistingStylesUnchanged>
+    <appendLines>Y</appendLines>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <file>
+      <name>${Internal.Entry.Current.Directory}/job/eport</name>
+      <extention>xlsx</extention>
+      <do_not_open_newfile_init>N</do_not_open_newfile_init>
+      <split>N</split>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <sheetname>Sheet1</sheetname>
+      <autosizecolums>N</autosizecolums>
+      <stream_data>N</stream_data>
+      <protect_sheet>N</protect_sheet>
+      <password>Encrypted </password>
+      <protected_by/>
+      <splitevery>0</splitevery>
+      <if_file_exists>reuse</if_file_exists>
+      <if_sheet_exists>reuse</if_sheet_exists>
+    </file>
+    <template>
+      <enabled>N</enabled>
+      <sheet_enabled>N</sheet_enabled>
+      <filename>template.xls</filename>
+      <sheetname/>
+      <hidden>N</hidden>
+    </template>
+    <fields>
+      <field>
+        <name>Step id</name>
+        <type>None</type>
+        <format/>
+        <title/>
+        <titleStyleCell/>
+        <styleCell/>
+        <commentField/>
+        <commentAuthorField/>
+        <formula>N</formula>
+        <hyperlinkField/>
+      </field>
+      <field>
+        <name>Step name</name>
+        <type>None</type>
+        <format/>
+        <title/>
+        <titleStyleCell/>
+        <styleCell/>
+        <commentField/>
+        <commentAuthorField/>
+        <formula>N</formula>
+        <hyperlinkField/>
+      </field>
+      <field>
+        <name>Lines read</name>
+        <type>None</type>
+        <format/>
+        <title/>
+        <titleStyleCell/>
+        <styleCell/>
+        <commentField/>
+        <commentAuthorField/>
+        <formula>N</formula>
+        <hyperlinkField/>
+      </field>
+      <field>
+        <name>Lines updated</name>
+        <type>None</type>
+        <format/>
+        <title/>
+        <titleStyleCell/>
+        <styleCell/>
+        <commentField/>
+        <commentAuthorField/>
+        <formula>N</formula>
+        <hyperlinkField/>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>912</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Output steps metrics</name>
+    <type>StepsMetrics</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      <step>
+        <name>WD_O14_cust_pro_catalog</name>
+        <copyNr>0</copyNr>
+        <stepRequired>Y</stepRequired>
+      </step>
+      <step>
+        <name>RD_O12_cust_pro_catalog</name>
+        <copyNr>0</copyNr>
+        <stepRequired>Y</stepRequired>
+      </step>
+    </steps>
+    <stepnamefield>Step name</stepnamefield>
+    <stepidfield>Step id</stepidfield>
+    <steplinesinputfield>Lines input</steplinesinputfield>
+    <steplinesoutputfield>Lines output</steplinesoutputfield>
+    <steplinesreadfield>Lines read</steplinesreadfield>
+    <steplinesupdatedfield>Lines updated</steplinesupdatedfield>
+    <steplineswrittentfield>Lines written</steplineswrittentfield>
+    <steplineserrorsfield>Lines rejected</steplineserrorsfield>
+    <stepsecondsfield>Duration</stepsecondsfield>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>RD_O12_cust_pro_catalog</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -569,26 +744,20 @@
     <connection>odoo 12</connection>
     <sql>SELECT
   id
-, res_id
-, res_model_id
-, res_model
-, res_name
-, activity_type_id
-, summary
-, note
-, feedback
-, date_deadline
+, "name"
+, product_tmpl_id
+, min_date
+, max_date
+, qty
+, list_price
+, sku
+, manufacture
 , user_id
-, recommended_activity_type_id
-, previous_activity_type_id
 , create_uid
 , create_date
 , write_uid
 , write_date
-, calendar_event_id
-, automated
-, create_user_id
-FROM "public".mail_activity
+FROM "public".cust_pro_catalog
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -603,7 +772,7 @@ FROM "public".mail_activity
         <name>id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
+        <origin>RD_O12_aging_report</origin>
         <comments>id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -621,82 +790,13 @@ FROM "public".mail_activity
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>res_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>res_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>res_model_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>res_model_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>res_model</name>
+        <name>name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>res_model</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>res_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>res_name</comments>
+        <origin>RD_O12_aging_report</origin>
+        <comments>name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -715,11 +815,11 @@ FROM "public".mail_activity
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>activity_type_id</name>
+        <name>product_tmpl_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>activity_type_id</comments>
+        <origin>RD_O12_aging_report</origin>
+        <comments>product_tmpl_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -736,59 +836,13 @@ FROM "public".mail_activity
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
+        <type>Date</type>
         <storagetype>normal</storagetype>
-        <name>summary</name>
-        <length>2147483647</length>
+        <name>min_date</name>
+        <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>summary</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>note</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>note</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>feedback</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>feedback</comments>
+        <origin>RD_O12_aging_report</origin>
+        <comments>min_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -807,11 +861,11 @@ FROM "public".mail_activity
       <value-meta>
         <type>Date</type>
         <storagetype>normal</storagetype>
-        <name>date_deadline</name>
+        <name>max_date</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>date_deadline</comments>
+        <origin>RD_O12_aging_report</origin>
+        <comments>max_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -830,58 +884,104 @@ FROM "public".mail_activity
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
+        <name>qty</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>RD_O12_aging_report</origin>
+        <comments>qty</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>list_price</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>RD_O12_aging_report</origin>
+        <comments>list_price</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>sku</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_aging_report</origin>
+        <comments>sku</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>manufacture</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_aging_report</origin>
+        <comments>manufacture</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_IN</date_format_locale>
+        <date_format_timezone>Asia/Calcutta</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
         <name>user_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>RD_O12_aging_report</origin>
         <comments>user_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>recommended_activity_type_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>recommended_activity_type_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>previous_activity_type_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>previous_activity_type_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -902,7 +1002,7 @@ FROM "public".mail_activity
         <name>create_uid</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
+        <origin>RD_O12_aging_report</origin>
         <comments>create_uid</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -925,7 +1025,7 @@ FROM "public".mail_activity
         <name>create_date</name>
         <length>6</length>
         <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
+        <origin>RD_O12_aging_report</origin>
         <comments>create_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -948,7 +1048,7 @@ FROM "public".mail_activity
         <name>write_uid</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
+        <origin>RD_O12_aging_report</origin>
         <comments>write_uid</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -971,78 +1071,9 @@ FROM "public".mail_activity
         <name>write_date</name>
         <length>6</length>
         <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
+        <origin>RD_O12_aging_report</origin>
         <comments>write_date</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>calendar_event_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>calendar_event_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Boolean</type>
-        <storagetype>normal</storagetype>
-        <name>automated</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>automated</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_IN</date_format_locale>
-        <date_format_timezone>Asia/Calcutta</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>create_user_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>RD_O12_mail_activity</origin>
-        <comments>create_user_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1073,7 +1104,7 @@ FROM "public".mail_activity
     </GUI>
   </step>
   <step>
-    <name>Sort_ma_id</name>
+    <name>Sort_cpc_id</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -1115,7 +1146,7 @@ FROM "public".mail_activity
     </GUI>
   </step>
   <step>
-    <name>WD_O14_mail_activity</name>
+    <name>WD_O14_cust_pro_catalog</name>
     <type>Update</type>
     <description/>
     <distribute>Y</distribute>
@@ -1133,7 +1164,7 @@ FROM "public".mail_activity
     <ignore_flag_field/>
     <lookup>
       <schema>public</schema>
-      <table>mail_activity</table>
+      <table>cust_pro_catalog</table>
       <key>
         <name>id</name>
         <field>id</field>
@@ -1141,8 +1172,60 @@ FROM "public".mail_activity
         <name2/>
       </key>
       <value>
-        <name>res_name</name>
-        <rename>res_name</rename>
+        <name>id</name>
+        <rename>id</rename>
+      </value>
+      <value>
+        <name>name</name>
+        <rename>name</rename>
+      </value>
+      <value>
+        <name>product_tmpl_id</name>
+        <rename>product_tmpl_id</rename>
+      </value>
+      <value>
+        <name>min_date</name>
+        <rename>min_date</rename>
+      </value>
+      <value>
+        <name>max_date</name>
+        <rename>max_date</rename>
+      </value>
+      <value>
+        <name>qty</name>
+        <rename>qty</rename>
+      </value>
+      <value>
+        <name>list_price</name>
+        <rename>list_price</rename>
+      </value>
+      <value>
+        <name>sku</name>
+        <rename>sku</rename>
+      </value>
+      <value>
+        <name>manufacture</name>
+        <rename>manufacture</rename>
+      </value>
+      <value>
+        <name>user_id</name>
+        <rename>user_id</rename>
+      </value>
+      <value>
+        <name>create_uid</name>
+        <rename>create_uid</rename>
+      </value>
+      <value>
+        <name>create_date</name>
+        <rename>create_date</rename>
+      </value>
+      <value>
+        <name>write_uid</name>
+        <rename>write_uid</rename>
+      </value>
+      <value>
+        <name>write_date</name>
+        <rename>write_date</rename>
       </value>
     </lookup>
     <attributes/>
@@ -1154,13 +1237,13 @@ FROM "public".mail_activity
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
+      <xloc>608</xloc>
       <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>wait_ma_load </name>
+    <name>wait</name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -1172,7 +1255,38 @@ FROM "public".mail_activity
     </partitioning>
     <steps>
       <step>
-        <name>Sort_ma_id</name>
+        <name>WD_O14_cust_pro_catalog</name>
+        <CopyNr>0</CopyNr>
+      </step>
+    </steps>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>736</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>wait_cpc_load </name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      <step>
+        <name>Sort_cpc_id</name>
         <CopyNr>0</CopyNr>
       </step>
     </steps>
