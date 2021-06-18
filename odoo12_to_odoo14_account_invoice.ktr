@@ -2164,25 +2164,29 @@ FROM "public".account_invoice
     <error_ignored>Y</error_ignored>
     <ignore_flag_field/>
     <lookup>
-      <schema/>
-      <table>account_invoice</table>
+      <schema>public</schema>
+      <table>account_move</table>
       <key>
-        <name>id</name>
+        <name>move_id</name>
         <field>id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>is_vender_offer_invoice</name>
-        <rename>is_vender_offer_invoice</rename>
-      </value>
-      <value>
         <name>vendor_credit_flag</name>
         <rename>vendor_credit_flag</rename>
       </value>
       <value>
-        <name>workflow_process_id</name>
-        <rename>workflow_process_id</rename>
+        <name>expiration_date</name>
+        <rename>expiration_date</rename>
+      </value>
+      <value>
+        <name>note</name>
+        <rename>note</rename>
+      </value>
+      <value>
+        <name>memo</name>
+        <rename>memo</rename>
       </value>
     </lookup>
     <attributes/>
